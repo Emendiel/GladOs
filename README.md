@@ -1,1 +1,3 @@
 # GladOs
+
+Bot pour Irc
