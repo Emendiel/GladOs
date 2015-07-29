@@ -11,7 +11,7 @@ class BotModeration(ircbot.SingleServerIRCBot):
         """
         ircbot.SingleServerIRCBot.__init__(self, [("irc.gg.st", 6667)],
                                            "GladOs", "The cake is a lie")
-        self.insultes = ["con", "pute", "cake"] # Liste à agrandir pour un "vrai" programme.
+        self.insultes = ["cake"] # Liste à agrandir pour un "vrai" programme.
 
     def on_welcome(self, serv, ev):
         """
@@ -48,12 +48,16 @@ class BotModeration(ircbot.SingleServerIRCBot):
             serv.part(canal, "You murder me !")
             self.die()
         
+        if message == "chell":
+            serv.privmsg(canal, "Do not mention her !")
+        
         for insulte in self.insultes:
             if insulte in message:
                 serv.privmsg(canal, "3...")
                 serv.execute_delayed(1, serv.privmsg, (canal, "2..."))
                 serv.execute_delayed(2, serv.privmsg, (canal, "1..."))
-                serv.execute_delayed(3, serv.kick, (auteur, "Continue testing !"))
+                serv.execute_delayed(3, serv.privmsg, (canal, "Continue testing !"))
+                #serv.execute_delayed(3, serv.kick, (auteur, "Continue testing !"))
                 break
 
 if __name__ == "__main__":
